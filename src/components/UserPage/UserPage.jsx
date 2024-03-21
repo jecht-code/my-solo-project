@@ -1,21 +1,38 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // import LogOutButton from '../LogOutButton/LogOutButton';
-import {useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
 
 function UserPage() {
-  // this component doesn't do much to start, just renders some user reducer info to the DOM
   const user = useSelector((store) => store.user);
+  const dispatch = useDispatch();
+  const cards = useSelector(store => store.cards);
 
-
+  useEffect(() => {
+    dispatch({ type: 'FETCH_CARDS' });
+  }, []);
 
   return (
     <div className="container">
-      <h2>Welcome, {user.username}!</h2>
+      <div className="welcomeContainer">
+        <h4>Welcome, {user.username}!</h4>
+      </div>
+      <div className="dashboardContainer">
+
+      </div>
       {/* <p>Your ID is: {user.id}</p> */}
       {/* <LogOutButton className="btn" /> */}
+      <div className="cardProgressContainer">
+        {cards.map(card => {
+          return (
+            <p key={card.id}>{card.cc_name}</p>
+          );
+        })}
+      </div>
+      <div className="transactionFormContainer">
+        
+      </div>
     </div>
-    /* Lets start here by trying to render Card data and then the widgets at top*/
-    
   );
 }
 
