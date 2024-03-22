@@ -3,10 +3,12 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 
+import CardList from '../CardList/CardList';
+
 function UserPage() {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
-  const cards = useSelector(store => store.cards);
+  // const cards = useSelector(store => store.cards);
 
   useEffect(() => {
     dispatch({ type: 'FETCH_CARDS' });
@@ -23,14 +25,15 @@ function UserPage() {
       {/* <p>Your ID is: {user.id}</p> */}
       {/* <LogOutButton className="btn" /> */}
       <div className="cardProgressContainer">
-        {cards.map(card => {
+        {/* {cards.map(card => {
           return (
             <p key={card.id}>{card.cc_name}</p>
           );
-        })}
+        })} */}
+        <CardList />
       </div>
       <div className="transactionFormContainer">
-        
+
       </div>
     </div>
   );
