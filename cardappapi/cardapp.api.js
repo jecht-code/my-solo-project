@@ -23,9 +23,15 @@ export const deleteCardData = (cardId) => {
 };
 
 //Axios call for my Transacton Data
-export const fetchTranxData = () => {
+export async function fetchTranxData() {
+    try {
+        const response = await axios.get('/api/transaction')
+        return response;
+    } catch (error) {
+        console.log('Error:', error)
+    }
     //axios GET call
-    return axios.get('/api/transaction');
+    //return axios.get('/api/transaction');
 };
 
 export const postTranxData = (tranxData) => {
