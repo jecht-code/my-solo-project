@@ -25,7 +25,7 @@ export const deleteCardData = (cardId) => {
 //Axios call for my Transacton Data
 export async function fetchTranxData() {
     try {
-        const response = await axios.get('/api/transaction')
+        const response = await axios.get('/api/tranx')
         return response;
     } catch (error) {
         console.log('Error:', error)

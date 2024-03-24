@@ -2,28 +2,28 @@ import { call, put, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
 
 import {
-    fetchCardData,
+    fetchTranxData,
 } from '../../../cardappapi/cardapp.api';
 
 // Create the rootSaga generator function
-function* cardRootSaga() {
-    yield takeEvery('FETCH_CARDS', fetchAllCards);
+function* tranxRootSaga() {
+    yield takeEvery('FETCH_TRANX', fetchAllTranx);
 }
 
-function* fetchAllCards() {
+function* fetchAllTranx(action) {
     try {
       // Get the movies:
       //const moviesResponse = yield axios.get('/api/movies');
-      const cardResponse = yield call(fetchCardData);
-      console.log('cardResponse is', cardResponse);
+      const tranxResponse = yield call(fetchTranxData);
+      console.log('tranxResponse is', tranxResponse);
       // Set the value of the movies reducer:
       yield put({
-        type: 'SET_CARDS',
-        payload: cardResponse.data
+        type: 'SET_TRANX',
+        payload: tranxResponse.data
       });
     } catch (error) {
-      console.log('fetchAllCards error:', error);
+      console.log('fetchAllTranx error:', error);
     }
 }
 
-export default cardRootSaga;
+export default tranxRootSaga;

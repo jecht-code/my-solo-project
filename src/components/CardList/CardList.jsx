@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import CardItem from '../CardItem/CardItem';
+import React, { useEffect } from 'react';
 
 
 function CardList()  {
