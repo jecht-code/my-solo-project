@@ -1,14 +1,14 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-function WidgetItem ({ tranx }) {
+function WidgetItem ({ listofWidget }) {
     const dispatch = useDispatch();
-
+    //title of widget
+    //data
     return (
-        <div>
-            <p key={tranx.id}>
-                {tranx.category_spend}
-            </p>
+        <div key={listofWidget.title}>
+            <p>{listofWidget.title}</p>
+            <p>{listofWidget.data}</p>
         </div>
     )
 }

@@ -8,12 +8,12 @@ import SummaryBlock from '../SummaryWidget/SummaryBlock';
 
 function UserPage() {
   const user = useSelector((store) => store.user);
-  const dispatch = useDispatch();
   const tranx = useSelector((store) => store.tranx);
   const cards = useSelector((store) => store.cards);
+  const dispatch = useDispatch();
   // const cards = useSelector(store => store.cards);
 
-  const totalcards = cards.length
+  // const totalcards = cards.length
 
   useEffect(() => {
     dispatch({ type: 'FETCH_CARDS' });
@@ -25,8 +25,8 @@ function UserPage() {
     <div className="container">
       <div className="welcomeContainer">
         <h4>Welcome, {user.username}!</h4>
-        <h4>{JSON.stringify(user)}</h4>
-        <h4>total cards: {totalcards}</h4>
+        {/* <h4>{JSON.stringify(user)}</h4>
+        <h4>total cards: {totalcards}</h4> */}
       </div>
       <div className="dashboardContainer">
         <SummaryBlock />

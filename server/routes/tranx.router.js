@@ -7,7 +7,9 @@ const router = express.Router();
  */
 router.get('/', (req, res) => {
   // GET route code here
-  const sqlText = `SELECT * FROM transactions ORDER BY date_spend_added;`;
+  const sqlText = `SELECT transactions.*, cards.user_id FROM "cards" 
+  JOIN "transactions"
+  ON cards.id = transactions.card_id;`;
   pool
     .query(sqlText)
     .then((result) => {
