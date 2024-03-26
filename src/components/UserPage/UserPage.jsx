@@ -42,7 +42,7 @@ function UserPage() {
         <CardList />
       </div>
       <div className="transactionFormContainer">
-
+        
       </div>
     </div>
   );

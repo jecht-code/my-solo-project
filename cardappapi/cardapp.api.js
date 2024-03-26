@@ -17,10 +17,16 @@ export const postCardData = (cardData) => {
     return axios.post('/api/card', cardData);
 };
 
-export const deleteCardData = (cardId) => {
-    //axios DELETE call
-    return axios.delete(`/api/card/${cardId}`);
-};
+// export async function deleteCardData(cardId) {
+//     try {
+//         const response = await axios.delete(`/api/card/`)
+//         return response;
+//     } catch (error) {
+//         console.log('Error:', error)
+//     }
+//     //axios DELETE call
+//     //return axios.delete(`/api/card/${cardId}`);
+// };
 
 //Axios call for my Transacton Data
 export async function fetchTranxData() {
