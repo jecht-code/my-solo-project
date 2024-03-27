@@ -5,6 +5,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 
 import CardList from '../CardList/CardList';
 import SummaryBlock from '../SummaryWidget/SummaryBlock';
+import TranxForm from '../TranxForm/TranxForm';
 import axios from 'axios';
 
 import {
@@ -59,7 +60,7 @@ function UserPage() {
         <CardList refreshCardList={fetchCardList} />
       </div>
       <div className="transactionFormContainer">
-        
+        <TranxForm />
       </div>
     </div>
   );

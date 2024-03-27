@@ -26,6 +26,25 @@ router.get('/', (req, res) => {
  */
 router.post('/', (req, res) => {
   // POST route code here
+  console.log(`POST /Tranx req.body:`, req.body);
+  const sqlText = `
+  INSERT INTO "transactions"
+  ("day_of_spend", "date_spend_added", "category_spend")
+  VALUES
+  ($1, $2, $3);`;
+
+  const sqlValues = [req.body.day_of_spend, req.body.date_spend_added, req.body.category_spend]
+
+  pool
+    .query(sqlText, sqlValues)
+    .then((result) => {
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      console.log(`Error adding transaction:`, error);
+      res.sendStatus(500);
+    });
+
 });
 
 module.exports = router;

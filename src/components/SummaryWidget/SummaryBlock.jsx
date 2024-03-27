@@ -19,7 +19,7 @@ function SummaryBlock()  {
     //Total Spend Widget
     const TotalSpend = () => {
         //THIS IS NOT WORKING 100% its only getting the latest value not the total SUM..
-        const totalSpend = tranx.reduce((total, currentValue) => total = total+currentValue.day_of_spend, 0);
+        const totalSpend = tranx.reduce((accumulator, currentValue) => accumulator+currentValue.day_of_spend, 0);
         widgetArray.push({title: "Total Spent", data: totalSpend})
     }
     //Call all the functions into one.
