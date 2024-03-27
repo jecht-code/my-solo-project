@@ -26,10 +26,10 @@ function UserPage() {
       .get(fetchCardData)
       .then((response) => {
         dispatch({ type: 'FETCH_CARDS', payload: response.data })
+      })
       .catch((error) => {
         console.log('ERROR', error);
       });
-    })
   };
 
   useEffect(() => {

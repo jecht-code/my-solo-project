@@ -29,11 +29,11 @@ router.post('/', (req, res) => {
   console.log(`POST /Tranx req.body:`, req.body);
   const sqlText = `
   INSERT INTO "transactions"
-  ("day_of_spend", "date_spend_added", "category_spend")
+  ("day_of_spend", "date_spend_added", "category_spend", "card_id")
   VALUES
-  ($1, $2, $3);`;
+  ($1, $2, $3, $4);`;
 
-  const sqlValues = [req.body.day_of_spend, req.body.date_spend_added, req.body.category_spend]
+  const sqlValues = [req.body.day_of_spend, req.body.date_spend_added, req.body.category_spend, req.body.cardselected]
 
   pool
     .query(sqlText, sqlValues)
