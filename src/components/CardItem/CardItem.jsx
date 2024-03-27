@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-function CardItem ({ card }) {
+function CardItem ({ card, refreshCardList }) {
     const dispatch = useDispatch();
     
     const cardHandleClickDelete = () => {
@@ -10,7 +10,7 @@ function CardItem ({ card }) {
         axios
             .delete(`/api/card/${card.id}`)
             .then((response) => {
-                //refreshCardList();
+                refreshCardList();
             })
             .catch((error) => {
                 console.log('ERROR:', error);

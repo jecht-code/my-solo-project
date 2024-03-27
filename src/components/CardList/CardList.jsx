@@ -3,19 +3,17 @@ import CardItem from '../CardItem/CardItem';
 import React, { useEffect } from 'react';
 
 
-function CardList()  {
-    // Same State Element
-    // const elementList = useSelector((state) => state.elementList);
+function CardList( { refreshCardList } )  {
     const cards = useSelector(store => store.cards);
-    //const isLoading = useSelector((store) => store.isLoadingCards);
 
     return (
         <div className='myCardsList'>
-            {cards.map((listCards, cardIndex) => {
+            {cards.map((listCards) => {
                 return (
                     <CardItem 
-                        key={cardIndex} 
+                        key={listCards.id} 
                         card={listCards}
+                        refreshCardList={refreshCardList}
                     />
                 )
             })}

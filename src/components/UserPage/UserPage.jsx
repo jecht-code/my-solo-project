@@ -5,6 +5,11 @@ import { useHistory, useLocation } from 'react-router-dom';
 
 import CardList from '../CardList/CardList';
 import SummaryBlock from '../SummaryWidget/SummaryBlock';
+import axios from 'axios';
+
+import {
+  fetchCardData,
+} from '../../../cardappapi/cardapp.api';
 
 function UserPage() {
   const user = useSelector((store) => store.user);
@@ -15,7 +20,19 @@ function UserPage() {
 
   // const totalcards = cards.length
 
+  const fetchCardList = () => {
+    axios
+      .get(fetchCardData)
+      .then((response) => {
+        dispatch({ type: 'FETCH_CARDS', payload: response.data })
+      .catch((error) => {
+        console.log('ERROR', error);
+      });
+    })
+  };
+
   useEffect(() => {
+    fetchCardList();
     dispatch({ type: 'FETCH_CARDS' });
     //dispatch({type: 'FETCH_TRANX', payload: user.id })
     dispatch({ type: 'FETCH_TRANX' });
@@ -39,7 +56,7 @@ function UserPage() {
             <p key={card.id}>{card.cc_name}</p>
           );
         })} */}
-        <CardList />
+        <CardList refreshCardList={fetchCardList} />
       </div>
       <div className="transactionFormContainer">
         
