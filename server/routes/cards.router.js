@@ -24,6 +24,33 @@ router.get('/', (req, res) => {
  */
 router.post('/', (req, res) => {
   // POST route code here
+  console.log(`POST /Card req.body:`, req.body);
+  const sqlText = `
+  INSERT INTO "cards" 
+  ("cc_name", "date_start", "date_promo_end", "spend_goal", "credit_limit", "rewards_value", "bankcard_name", "user_id")
+  VALUES
+  ($1, $2, $3, $4, $5, $6, $7, $8);`;
+
+  const sqlValues = [
+    req.body.cc_name,
+    req.body.date_start,
+    req.body.date_promo_end,
+    req.body.spend_goal,
+    req.body.credit_limit,
+    req.body.rewards_value,
+    req.body.bankcard_name,
+    req.body.user_id
+  ]
+
+  pool
+    .query(sqlText, sqlValues)
+    .then((result) => {
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      console.log(`Error adding transaction:`, error);
+      res.sendStatus(500);
+    });
 });
 
 /**
