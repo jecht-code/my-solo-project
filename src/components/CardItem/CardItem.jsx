@@ -1,10 +1,16 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
 
 function CardItem ({ card, refreshCardList }) {
     const dispatch = useDispatch();
+    const history = useHistory();
     
+    useEffect(() => {
+        dispatch({ type: 'FETCH_CARDS'});
+    }, []);
+
     const cardHandleClickDelete = () => {
         console.log('DELETE', card.id);
         axios
@@ -17,12 +23,22 @@ function CardItem ({ card, refreshCardList }) {
             });
     };
 
+    const handleCarditem = (card) => {
+        //console.log('click!!')
+        //location.state = movie
+        //console.log(movie)
+        
+        history.push({ pathname: '/detailspage', state: card })
+        
+    }
+
     return (
         <div>
             <p key={card.id}>
                 {card.cc_name}
             </p>
             <button onClick={cardHandleClickDelete}>DELETE</button>
+            <button onClick={() => handleCarditem(card)}>Details Page</button>
         </div>
     )
 }

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Route, HashRouter as Router } from 'react-router-dom';
 // import LogOutButton from '../LogOutButton/LogOutButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -6,6 +7,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import CardList from '../CardList/CardList';
 import SummaryBlock from '../SummaryWidget/SummaryBlock';
 import TranxForm from '../TranxForm/TranxForm';
+import CardDetailPage from '../CardDetailPage/CardDetailPage';
 import axios from 'axios';
 
 import {
