@@ -47,4 +47,28 @@ router.post('/', (req, res) => {
 
 });
 
+/**
+ * PUT route template
+ */
+
+router.put('/:id', (req, res) => {
+  const sqlText = `
+  UPDATE "transactions"
+  SET "day_of_spend" = $2, "date_spend_added" = $3, "category_spend" = $4
+  WHERE "id" = $1;
+  `;
+  const { id } = req.params;
+  const { day_of_spend, date_spend_added, category_spend } = req.body;
+
+  pool
+    .query(sqlText, [id, day_of_spend, date_spend_added, category_spend ])
+    .then((result) => {
+      res.sendStatus(200);
+    })
+    .catch((dbErr) => {
+      console.log('error getting books', dbErr);
+      res.sendStatus(500);
+    });
+});
+
 module.exports = router;
