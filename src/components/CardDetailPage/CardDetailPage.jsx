@@ -2,6 +2,16 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 
+//This is the Import for Table setup of transaction
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { Tab } from '@mui/material';
+
 function CardDetailPage() {
     const history = useHistory();
     const location = useLocation();
@@ -24,13 +34,39 @@ function CardDetailPage() {
   
     return (
     
-      <div data-testid='CardDetailsPage'>
+      <main data-testid='CardDetailsPage'>
         <h1>DetailsPage</h1>
         <h2>{card.cc_name}</h2>
-        <p>card id = {card.id}</p>
-        <p>{card.rewards_value}</p>
         <button data-testid='toList' onClick={() => handleBackTo()}>Return to List</button>
-      </div>
+        <Table>
+            <TableBody>
+                {transactions.map(transaction => {
+                    return (
+                        <TableRow key={transaction.id}>
+                            <TableCell component="th" scope="row">
+                                <button>Delete</button>
+                                <button>Edit</button>
+                            </TableCell>
+                            <TableCell>{transaction.category_spend}</TableCell>
+                            <TableCell>{transaction.day_of_spend}</TableCell>
+                        </TableRow>
+                    );
+                    })}
+            </TableBody>
+        </Table>
+
+        {/* <div>
+        {transactions.map((transaction) => {
+                return (
+                    <div data-testid='transaction-item' key={transaction.id}>
+                    <h3>{transaction.category_spend}</h3>
+                    <p>{transaction.day_of_spend}</p>
+                    </div>
+                )
+            })}
+        </div> */}
+
+      </main>
     );
   }
 
