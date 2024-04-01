@@ -15,6 +15,8 @@ import { Tab } from '@mui/material';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Select, MenuItem, Modal, Button, Box, Typography } from '@mui/material';
+import { LineChart } from '@mui/x-charts/LineChart';
+import { BarChart } from '@mui/x-charts/BarChart';
 
 const style = {
     position: 'absolute',
@@ -50,9 +52,6 @@ function CardDetailPage() {
     //Initialize useState after Transactions Filter
     const [id, setTranxId] = useState('');
 
-    console.log(tranx);
-    console.log(transactions);
-
     const handleBackTo = () => {
         history.push({ pathname: '/user', state: card })
         console.log({history})
@@ -61,7 +60,6 @@ function CardDetailPage() {
     //Modal for Put
     const handleEditTranx = (id) => {
         //event.preventDefault();
-        //const [id, setTranxId] = useState(`${tranx_id}`);
         console.log(`Editing Tranx Data`, { id, day_of_spend, date_spend_added, category_spend })
 
         axios
@@ -79,20 +77,70 @@ function CardDetailPage() {
         setCategorySpend('');
     }
     console.log('Checking Card State',card.cc_name);
+    console.log('TestArray', JSON.stringify(transactions));
+    console.log({transactions});
+
+    const tranxHandleClickDelete = (id) => {
+        console.log('DELETE', id);
+        axios
+            .delete(`/api/tranx/${id}`)
+            .then((response) => {
+                //refreshCardList();
+            })
+            .catch((error) => {
+                console.log('ERROR:', error);
+            });
+    };
+
+    function testLoop() {
+        transactions.map((trans) => trans.date_spend_added = new Date(trans.date_spend_added))
+    };
+
+    testLoop();
+    console.log(transactions);
+
+    const a = new Date("2024-04-02T04:00:00.000Z");
+    const b = new Date("2024-04-02T04:00:00.00");
+    console.log(a);
+    console.log(b);
     return (
-    
       <main data-testid='CardDetailsPage'>
         <h1>DetailsPage</h1>
         <h2>{card.cc_name}</h2>
         <button data-testid='toList' onClick={() => handleBackTo()}>Return to List</button>
+
+        <BarChart
+            dataset={transactions}
+            xAxis={[{ scaleType: 'band', dataKey: 'category_spend'}]}
+            series={[{ dataKey: 'day_of_spend'}]}
+            width={500}
+            height={300}
+        />
+
+        <LineChart
+            //dataset={transactions.map((trans) => trans.date_spend_added = new Date(trans.date_spend_added))}
+            dataset={transactions}
+            xAxis={[{ scaleType: 'time', dataKey: 'date_spend_added' }]}
+            //xAxis={[{ scaleType: 'time', data: [new Date("2024-04-01"), new Date("2024-04-02"), new Date("2024-04-03"), new Date("2024-04-04")] }]}
+            // xAxis={[{ scaleType: 'time', data: [2024-04-01, "2024-04-02", "2024-04-03","2024-04-04","2024-04-05","2024-04-06"] }]}
+            series={[{ dataKey: 'day_of_spend'}]}
+            // series={[
+            // {
+            // data: [2, 5.5, 2, 8.5],
+            // },
+            // ]}
+            width={500}
+            height={300}
+            
+        />
+
         <Table>
             <TableBody>
                 {transactions.map(transaction => {
                     return (
                         <TableRow key={transaction.id}>
                             <TableCell component="th" scope="row">
-                                {/* <DeleteIcon></DeleteIcon> */}
-                                <Button>{transaction.id}</Button>
+                                <DeleteIcon onClick={() => tranxHandleClickDelete(transaction.id)}></DeleteIcon>
                                 <BorderColorIcon onClick={handleOpen}></BorderColorIcon>
                                 <Modal
                                     open={open}
@@ -135,6 +183,7 @@ function CardDetailPage() {
                                 </Modal>
                             </TableCell>
                             <TableCell>{transaction.category_spend}</TableCell>
+                            <TableCell>{transaction.date_spend_added.toLocaleDateString()}</TableCell>
                             <TableCell>{transaction.day_of_spend}</TableCell>
                         </TableRow>
                     );

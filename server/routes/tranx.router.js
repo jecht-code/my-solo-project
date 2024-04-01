@@ -48,6 +48,18 @@ router.post('/', (req, res) => {
 });
 
 /**
+ * DELETE route template
+ */
+router.delete('/:id', (req, res) => {
+  pool.query('DELETE FROM "transactions" WHERE id=$1', [req.params.id]).then((result) => {
+      res.sendStatus(200);
+  }).catch((error) => {
+      console.log('Error DELETE /api/tranx', error);
+      res.sendStatus(500);
+  })
+});
+
+/**
  * PUT route template
  */
 

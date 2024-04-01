@@ -24,12 +24,7 @@ function CardItem ({ card, refreshCardList }) {
     };
 
     const handleCarditem = (card) => {
-        //console.log('click!!')
-        //location.state = movie
-        //console.log(movie)
-        
-        history.push({ pathname: '/detailspage', state: card })
-        
+        history.push({ pathname: '/detailspage', state: card })   
     }
 
     return (
