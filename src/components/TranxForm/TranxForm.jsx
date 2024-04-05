@@ -98,7 +98,7 @@ function TranxForm( {refreshCardList} ) {
 
     return (
         <section>
-            <h2>Add Transaction</h2>
+            <h4>Add Transaction</h4>
 
             <Select
                 labelId="demo-simple-select-label"
@@ -180,7 +180,7 @@ function TranxForm( {refreshCardList} ) {
                             onChange={(event) => setBankCardName(event.target.value)}
                             type="Text" />
 
-                            <button type="submit">Add Transaction</button>
+                            <button type="submit">Add Card to Page</button>
                         </form>
                     </Typography>
                 </Box>

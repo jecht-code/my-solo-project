@@ -11,6 +11,7 @@ const passport = require('./strategies/user.strategy');
 const userRouter = require('./routes/user.router');
 const cardRouter = require('./routes/cards.router');
 const tranxRouter = require('./routes/tranx.router');
+//const tranxcardRouter = require('./routes/tranxbycard.router');
 
 // Express Middleware
 app.use(express.json());
@@ -28,6 +29,7 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/api/card', cardRouter);
 app.use('/api/tranx', tranxRouter);
+//app.use('/api/tranxcard', tranxcardRouter);
 
 // Listen Server & Port
 app.listen(PORT, () => {

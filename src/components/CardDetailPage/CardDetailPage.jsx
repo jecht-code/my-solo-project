@@ -97,15 +97,9 @@ function CardDetailPage() {
     };
 
     testLoop();
-    console.log(transactions);
-
-    const a = new Date("2024-04-02T04:00:00.000Z");
-    const b = new Date("2024-04-02T04:00:00.00");
-    console.log(a);
-    console.log(b);
     return (
       <main data-testid='CardDetailsPage'>
-        <h1>DetailsPage</h1>
+        <h1>Details</h1>
         <h2>{card.cc_name}</h2>
         <button data-testid='toList' onClick={() => handleBackTo()}>Return to List</button>
 

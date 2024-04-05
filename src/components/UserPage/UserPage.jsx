@@ -44,7 +44,7 @@ function UserPage() {
   return (
     <div className="container">
       <div className="welcomeContainer">
-        <h4>Welcome, {user.username}!</h4>
+        <h2>Welcome, {user.username}!</h2>
         {/* <h4>{JSON.stringify(user)}</h4>
         <h4>total cards: {totalcards}</h4> */}
       </div>
@@ -62,7 +62,7 @@ function UserPage() {
         <CardList refreshCardList={fetchCardList} />
       </div>
       <div className="transactionFormContainer">
-        <TranxForm />
+        <TranxForm refreshCardList={fetchCardList}/>
       </div>
     </div>
   );

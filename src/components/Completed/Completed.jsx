@@ -1,9 +1,26 @@
+
+
+// This is one of our simplest components
+// It doesn't have local state
+// It doesn't dispatch any redux actions or display any part of redux state
+// or even care what the redux state is
+
+// function InfoPage() {
+//   return (
+//     <div className="container">
+//       <p>Info Page</p>
+//     </div>
+//   );
+// }
+
+// export default InfoPage;
+
 import { useDispatch, useSelector } from 'react-redux';
 import CardItem from '../CardItem/CardItem';
 import React, { useEffect } from 'react';
 
 
-function CardList( { refreshCardList } )  {
+function Completed( { refreshCardList } )  {
     const cards = useSelector(store => store.cards);
     const tranx = useSelector(store => store.tranx);
     const dispatch = useDispatch();
@@ -16,7 +33,7 @@ function CardList( { refreshCardList } )  {
                 tranx.filter((transact) => transact.card_id === card.id)
                 .reduce(
                     (cardspend, currentTranx) => cardspend+currentTranx.day_of_spend, 0
-                ) < card.spend_goal &&
+                ) >= card.spend_goal &&
                 
                     <CardItem 
                         key={card.id} 
@@ -30,4 +47,4 @@ function CardList( { refreshCardList } )  {
     )
 }
 
-export default CardList;
+export default Completed;
