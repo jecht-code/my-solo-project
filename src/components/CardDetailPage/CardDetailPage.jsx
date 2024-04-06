@@ -1,7 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+
+import {
+    fetchTranxData,
+  } from '../../../cardappapi/cardapp.api';
 
 //This is the Import for Table setup of transaction
 import Table from '@mui/material/Table';
@@ -31,26 +35,40 @@ const style = {
   };
 
 function CardDetailPage() {
+    const { id } = useParams();
     const history = useHistory();
     const location = useLocation();
-    const card = history.location.state;
+    // const card = history.location.state;
     const tranx = useSelector((store) => store.tranx);
-
-    //Modal useState
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const cards =useSelector((store) => store.cards);
+    const dispatch = useDispatch();
 
     //Store Modal Data for editing
     const [day_of_spend, setDaySpend] = useState('');
     const [date_spend_added, setDateSpent] = useState('');
     const [category_spend, setCategorySpend] = useState('');
     
-    //This would be card id becaues depending on which card you select..
-    const transactions = tranx.filter((transact) => transact.card_id === card.id)
+    console.log('Card ID test', Number(id));
 
+    //This would be card id becaues depending on which card you select..
+    const transactions = tranx.filter((transact) => transact.card_id === Number(id))
+    const card = cards.filter((card_array) => card_array.id === Number(id))
     //Initialize useState after Transactions Filter
-    const [id, setTranxId] = useState('');
+    //const [id, setTranxId] = useState('');
+
+    console.log(transactions);
+    console.log(card);
+
+    //PUT SAGA TEST
+    const [editTranx, setEditTranx] = useState({ id: 1, day_of_spend: '', date_spend_added: new Date(), category_spend: ''})
+
+    //Modal useState
+    const [open, setOpen] = useState(false);
+    const handleOpen = (tranx_array) => {
+        setEditTranx(tranx_array);
+        setOpen(true);
+    };
+    const handleClose = () => setOpen(false);
 
     const handleBackTo = () => {
         history.push({ pathname: '/user', state: card })
@@ -58,38 +76,42 @@ function CardDetailPage() {
     }
 
     //Modal for Put
-    const handleEditTranx = (id) => {
-        //event.preventDefault();
-        console.log(`Editing Tranx Data`, { id, day_of_spend, date_spend_added, category_spend })
+    const handleEditTranx = () => {
+        dispatch({ type: 'UPDATE_TRANX', payload: editTranx })
 
-        axios
-            .put(`/api/tranx/${id}`, { id, day_of_spend, date_spend_added, category_spend })
-            .then((response) => {
-                //Needs to be REFRESH TRANS List
-            })
-            .catch((error) => {
-                console.log('ERROR:', error);
-            });
+        // axios
+        //     .put(`/api/tranx/${editTranx.id}`, { editTranx })
+        //     .then((response) => {
+        //         dispatch({ type: 'FETCH_TRANX', payload: tranxResponse.data })
+        //     })
+        //     .then((response) => {
+        //         history.push({ pathname: `/detailspage/${card.id}`})
+        //     })
+        //     .catch((error) => {
+        //         console.log('ERROR:', error);
+        //     });
         
         //clear inputs for tranx
-        setDaySpend('');
-        setDateSpent('');
-        setCategorySpend('');
+        // setDaySpend('');
+        // setDateSpent('');
+        // setCategorySpend('');
     }
-    console.log('Checking Card State',card.cc_name);
-    console.log('TestArray', JSON.stringify(transactions));
-    console.log({transactions});
+    //console.log('Checking Card State',card.cc_name);
+    //console.log('TestArray', JSON.stringify(transactions));
+    //console.log({transactions});
 
-    const tranxHandleClickDelete = (id) => {
-        console.log('DELETE', id);
-        axios
-            .delete(`/api/tranx/${id}`)
-            .then((response) => {
-                //refreshCardList();
-            })
-            .catch((error) => {
-                console.log('ERROR:', error);
-            });
+    const tranxHandleClickDelete = (tranx_id) => {
+        console.log('DELETE', tranx_id);
+        dispatch({ type: 'DELETE_TRANX', payload: { id: tranx_id } })
+        // axios
+        //     .delete(`/api/tranx/${id}`)
+        //     .then((response) => {
+        //         //refreshCardList();
+        //         //fetchTranxList();
+        //     })
+        //     .catch((error) => {
+        //         console.log('ERROR:', error);
+        //     });
     };
 
     function testLoop() {
@@ -97,6 +119,7 @@ function CardDetailPage() {
     };
 
     testLoop();
+
     return (
       <main data-testid='CardDetailsPage'>
         <h1>Details</h1>
@@ -135,9 +158,10 @@ function CardDetailPage() {
                         <TableRow key={transaction.id}>
                             <TableCell component="th" scope="row">
                                 <DeleteIcon onClick={() => tranxHandleClickDelete(transaction.id)}></DeleteIcon>
-                                <BorderColorIcon onClick={handleOpen}></BorderColorIcon>
+                                <BorderColorIcon onClick={() => handleOpen(transaction)}></BorderColorIcon>
                                 <Modal
                                     open={open}
+                                    // onOpen={() => handleOpen(transaction)}
                                     onClose={handleClose}
                                     aria-labelledby="modal-modal-title"
                                     aria-describedby="modal-modal-description"
@@ -151,23 +175,35 @@ function CardDetailPage() {
                                                     <input 
                                                     required
                                                     placeholder='Date Spent'
-                                                    value={date_spend_added}
-                                                    onChange={(event) => setDateSpent(event.target.value)}
+                                                    value={editTranx.date_spend_added.toISOString().split('T')[0]}
+                                                    //onChange={(event) => setEditTranx(event.target.value)}
+                                                    onChange={(event) =>
+                                                        setEditTranx({ ...editTranx, date_spend_added: event.target.value })
+                                                      }
+                                                    //onChange={(event) => transaction.date_spend_added = event.target.value}
                                                     type="date" />
                                                 </label>
 
                                                 <input 
                                                 required
                                                 placeholder='Amount Spent'
-                                                value={day_of_spend}
-                                                onChange={(event) => setDaySpend(event.target.value)}
+                                                value={editTranx.day_of_spend}
+                                                //onChange={(event) => setDaySpend(event.target.value)}
+                                                //onChange={(event) => transaction.day_of_spend = event.target.value}
+                                                onChange={(event) =>
+                                                    setEditTranx({ ...editTranx, day_of_spend: event.target.value })
+                                                  }
                                                 type="number" />
 
                                                 <input 
                                                 required
                                                 placeholder='Category'
-                                                value={category_spend}
-                                                onChange={(event) => setCategorySpend(event.target.value)}
+                                                value={editTranx.category_spend}
+                                                //onChange={(event) => setCategorySpend(event.target.value)}
+                                                //onChange={(event) => transaction.category_spend = event.target.value}
+                                                onChange={(event) =>
+                                                    setEditTranx({ ...editTranx, category_spend: event.target.value })
+                                                  }
                                                 type="text" />
 
                                                 <button type="submit">Add Transaction</button>

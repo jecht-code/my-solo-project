@@ -8,6 +8,8 @@ import {
 // Create the rootSaga generator function
 function* tranxRootSaga() {
     yield takeEvery('FETCH_TRANX', fetchAllTranx);
+    yield takeEvery('DELETE_TRANX', deleteTranxSaga);
+    yield takeEvery('UPDATE_TRANX', updateTranxSaga);
 }
 
 function* fetchAllTranx(action) {
@@ -25,5 +27,36 @@ function* fetchAllTranx(action) {
       console.log('fetchAllTranx error:', error);
     }
 }
+
+function* deleteTranxSaga(action) {
+  try {
+    yield axios({
+      method: 'DELETE',
+      url: `/api/tranx/${action.payload.id}`,
+    });
+    yield put({ type: 'FETCH_TRANX' });
+  } catch (error) {
+    yield put({
+      type: 'ERROR_TRANX',
+      payload: 'Could not delete the transaction. Please Try Again.'
+    });
+  }
+};
+
+function* updateTranxSaga(action) {
+  try {
+    yield axios({
+      method: 'PUT',
+      url: `/api/tranx/${action.payload.id}`,
+      data: action.payload,
+    });
+    yield put({ type: 'FETCH_TRANX' });
+  } catch (error) {
+    yield put({
+      type: 'ERROR_TRANX',
+      payload: 'Could not delete the transaction. Please Try Again.'
+    });
+  }
+};
 
 export default tranxRootSaga;

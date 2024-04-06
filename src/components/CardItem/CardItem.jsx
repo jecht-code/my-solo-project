@@ -38,7 +38,7 @@ function CardItem ({ card, refreshCardList }) {
     };
 
     const handleCarditem = (card) => {
-        history.push({ pathname: '/detailspage', state: card })   
+        history.push({ pathname: `/detailspage/${card.id}`})   
     }
 
     console.log(tranx);

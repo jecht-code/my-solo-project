@@ -30,6 +30,8 @@ function App() {
 
   useEffect(() => {
     dispatch({ type: 'FETCH_USER' });
+    dispatch({ type: 'FETCH_CARDS' });
+    dispatch({ type: 'FETCH_TRANX' });
   }, [dispatch]);
 
   return (
@@ -72,7 +74,7 @@ function App() {
           <ProtectedRoute
             // logged in shows InfoPage else shows LoginPage
             exact
-            path="/detailspage"
+            path="/detailspage/:id"
           >
             <CardDetailPage />
           </ProtectedRoute>
