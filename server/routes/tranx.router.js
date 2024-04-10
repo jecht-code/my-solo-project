@@ -9,7 +9,8 @@ router.get('/', (req, res) => {
   // GET route code here
   const sqlText = `SELECT transactions.*, cards.user_id FROM "cards" 
   JOIN "transactions"
-  ON cards.id = transactions.card_id;`;
+  ON cards.id = transactions.card_id
+  ORDER BY "date_spend_added" ASC;`;
   pool
     .query(sqlText)
     .then((result) => {
@@ -67,7 +68,8 @@ router.put('/:id', (req, res) => {
   const sqlText = `
   UPDATE "transactions"
   SET "day_of_spend" = $2, "date_spend_added" = $3, "category_spend" = $4
-  WHERE "id" = $1;
+  WHERE "id" = $1
+  ;
   `;
   const { id } = req.params;
   const { day_of_spend, date_spend_added, category_spend } = req.body;

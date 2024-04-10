@@ -10,23 +10,26 @@ function CardList( { refreshCardList } )  {
     console.log(cards)
 
     return (
-        <div className='myCardsList'>
-            {cards.map((card) => {
-                return (
-                tranx.filter((transact) => transact.card_id === card.id)
-                .reduce(
-                    (cardspend, currentTranx) => cardspend+currentTranx.day_of_spend, 0
-                ) < card.spend_goal &&
-                
-                    <CardItem 
-                        key={card.id} 
-                        card={card}
-                        refreshCardList={refreshCardList}
-                        
-                    />
-                )
-            })}
-        </div>
+        <section>
+            <div className='myCardsList'>
+                <h4>List of Cards</h4>
+                {cards.map((card) => {
+                    return (
+                    tranx.filter((transact) => transact.card_id === card.id)
+                    .reduce(
+                        (cardspend, currentTranx) => cardspend+currentTranx.day_of_spend, 0
+                    ) < card.spend_goal &&
+                    
+                        <CardItem 
+                            key={card.id} 
+                            card={card}
+                            refreshCardList={refreshCardList}
+                            
+                        />
+                    )
+                })}
+            </div>
+        </section>
     )
 }
 

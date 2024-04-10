@@ -16,7 +16,7 @@ function SummaryBlock()  {
     //Sum the number of CCs
     const SumofCC = () => {
         const totalcards = cards.length
-        widgetArray.push({title: "Total CC", data: totalcards})
+        widgetArray.push({title: "Total Credit Cards", data: totalcards})
     }
 
     //Total Spend Widget
@@ -50,7 +50,7 @@ function SummaryBlock()  {
         }
         , 0);
 
-        widgetArray.push({title: "Bonus Reward Earned", data: totalrewardscompleted})
+        widgetArray.push({title: "Bonus Rewards Earned", data: totalrewardscompleted})
     }
 
     //Call all the functions into one.
