@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';
 
 //Material UI Package Import
@@ -22,6 +22,7 @@ function TranxForm( {refreshCardList} ) {
     //This brings over Cards items to render under MenuItem Compoenent within Select Component
     const cards = useSelector(store => store.cards);
     const user = useSelector((store) => store.user);
+    const dispatch = useDispatch();
     //Add Fields for Transaction Data Form field.
     const [day_of_spend, setDayspend] = useState('');
     const [date_spend_added, setDatespend] = useState('');
@@ -43,7 +44,7 @@ function TranxForm( {refreshCardList} ) {
     const [rewards_value, setRewardsValue] = useState('');
     const [bankcard_name, setBankCardName] = useState('');
     const [user_id, setUserId] = useState(user.id);
-
+    
     const handleSubmitTranx = (event) => {
         event.preventDefault();
         console.log(`Adding Transaction Data`, { day_of_spend, date_spend_added, category_spend, cardselected })
@@ -95,6 +96,8 @@ function TranxForm( {refreshCardList} ) {
         setBankCardName('');
         //setUserId('');
     }
+
+    
 
     return (
         <section>

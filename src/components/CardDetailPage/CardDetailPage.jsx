@@ -21,6 +21,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Select, MenuItem, Modal, Button, Box, Typography } from '@mui/material';
 import { LineChart } from '@mui/x-charts/LineChart';
 import { BarChart } from '@mui/x-charts/BarChart';
+import Grid from '@mui/material/Grid';
 
 const style = {
     position: 'absolute',
@@ -124,33 +125,50 @@ function CardDetailPage() {
       <main data-testid='CardDetailsPage'>
         <h1>Details</h1>
         <h2>{card.cc_name}</h2>
-        <button data-testid='toList' onClick={() => handleBackTo()}>Return to List</button>
-
-        <BarChart
-            dataset={transactions}
-            xAxis={[{ scaleType: 'band', dataKey: 'category_spend'}]}
-            series={[{ dataKey: 'day_of_spend'}]}
-            width={500}
-            height={300}
-        />
-
-        <LineChart
-            //dataset={transactions.map((trans) => trans.date_spend_added = new Date(trans.date_spend_added))}
-            dataset={transactions}
-            xAxis={[{ scaleType: 'time', dataKey: 'date_spend_added' }]}
-            //xAxis={[{ scaleType: 'time', data: [new Date("2024-04-01"), new Date("2024-04-02"), new Date("2024-04-03"), new Date("2024-04-04")] }]}
-            // xAxis={[{ scaleType: 'time', data: [2024-04-01, "2024-04-02", "2024-04-03","2024-04-04","2024-04-05","2024-04-06"] }]}
-            series={[{ dataKey: 'day_of_spend'}]}
-            // series={[
-            // {
-            // data: [2, 5.5, 2, 8.5],
-            // },
-            // ]}
-            width={500}
-            height={300}
+        <div>
             
-        />
+                <button data-testid='toList' onClick={() => handleBackTo()}>Return to List</button>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+        </div>
 
+        
+        <Grid container spacing={2} columns={6} >
+            <Grid item xs={3}>
+                <Paper height="100%" elevation={3}>
+                    <BarChart
+                        dataset={transactions}
+                        xAxis={[{ scaleType: 'band', dataKey: 'category_spend'}]}
+                        series={[{ dataKey: 'day_of_spend'}]}
+                        width={750}
+                        height={300}
+                    />
+                </Paper>
+            </Grid>
+            <Grid item xs={3}>
+                <Paper height="100%" elevation={3}>
+                    <LineChart
+                        //dataset={transactions.map((trans) => trans.date_spend_added = new Date(trans.date_spend_added))}
+                        dataset={transactions}
+                        xAxis={[{ scaleType: 'time', dataKey: 'date_spend_added' }]}
+                        //xAxis={[{ scaleType: 'time', data: [new Date("2024-04-01"), new Date("2024-04-02"), new Date("2024-04-03"), new Date("2024-04-04")] }]}
+                        // xAxis={[{ scaleType: 'time', data: [2024-04-01, "2024-04-02", "2024-04-03","2024-04-04","2024-04-05","2024-04-06"] }]}
+                        series={[{ dataKey: 'day_of_spend'}]}
+                        // series={[
+                        // {
+                        // data: [2, 5.5, 2, 8.5],
+                        // },
+                        // ]}
+                        width={750}
+                        height={300}
+                        
+                    />
+                </Paper>
+            </Grid>
+        </Grid>
+        
         <Table>
             <TableBody>
                 {transactions.map(transaction => {

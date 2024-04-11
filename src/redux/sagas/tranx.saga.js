@@ -10,6 +10,7 @@ function* tranxRootSaga() {
     yield takeEvery('FETCH_TRANX', fetchAllTranx);
     yield takeEvery('DELETE_TRANX', deleteTranxSaga);
     yield takeEvery('UPDATE_TRANX', updateTranxSaga);
+    yield takeEvery('POST_TRANX', postTranxSaga);
 }
 
 function* fetchAllTranx(action) {
@@ -55,6 +56,22 @@ function* updateTranxSaga(action) {
     yield put({
       type: 'ERROR_TRANX',
       payload: 'Could not delete the transaction. Please Try Again.'
+    });
+  }
+};
+
+function* postTranxSaga(action) {
+  try {
+    yield axios({
+      method: 'POST',
+      url: `/api/tranx/${action.payload.id}`,
+      data: action.payload,
+    });
+    yield put({ type: 'FETCH_TRANX' });
+  } catch (error) {
+    yield put({
+      type: 'ERROR_TRANX',
+      payload: 'Could not POST the transaction. Please Try Again.'
     });
   }
 };
